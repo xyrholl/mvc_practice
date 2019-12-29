@@ -71,11 +71,11 @@ public class BbsDetailTwo extends JFrame {
 					check = s.bbsCtrl.UpdateWritePage(dto, seq);
 					if (check) {
 						JOptionPane.showMessageDialog(null, "정상적으로 수정이 되었습니다.");
-						BbsListView view = new BbsListView();
+						s.bbsCtrl.bbsView();
 						dispose();
 					}else {
 						JOptionPane.showMessageDialog(null, "수정할 권한이 없습니다.");
-						BbsListView view = new BbsListView();
+						s.bbsCtrl.bbsView();
 						dispose();
 						return;
 					}

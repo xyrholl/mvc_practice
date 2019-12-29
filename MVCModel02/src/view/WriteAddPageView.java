@@ -13,7 +13,6 @@ import javax.swing.JTextField;
 import dto.BbsDto;
 import singleton.Singleton;
 
-
 public class WriteAddPageView extends JFrame {
 
 	public WriteAddPageView() {
@@ -21,10 +20,8 @@ public class WriteAddPageView extends JFrame {
 		setBounds(100, 100, 370, 480);
 
 		setLayout(null);
-		
+
 		Singleton s = Singleton.getInstance();
-//		MemberDao memDao = MemberDao.getInstance();
-//		BbsDao bbsDao = BbsDao.getInstance();
 
 		JLabel idLabel = new JLabel("ID");
 		idLabel.setBounds(50, 15, 45, 30);
@@ -69,7 +66,7 @@ public class WriteAddPageView extends JFrame {
 					dto.setTitle(titleTextf.getText());
 					dto.setContent(contentsTextf.getText());
 					s.bbsCtrl.AddWritePage(dto);
-					BbsListView view = new BbsListView();
+					s.bbsCtrl.bbsView();
 					dispose();
 				}
 			}

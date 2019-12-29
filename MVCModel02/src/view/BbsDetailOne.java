@@ -97,7 +97,7 @@ public class BbsDetailOne extends JFrame {
 					JOptionPane.showMessageDialog(null, "글을 삭제 하시겠습니까?");
 					s.bbsCtrl.delete(seqNum);
 					dispose();
-					BbsListView view = new BbsListView();
+					s.bbsCtrl.bbsView();
 					JOptionPane.showMessageDialog(null, titleTextf.getText() + " 글이 삭제 되었습니다.");
 				} else {
 					JOptionPane.showMessageDialog(null, "작성자만 삭제가 가능합니다.");
@@ -113,7 +113,7 @@ public class BbsDetailOne extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
-				BbsListView view = new BbsListView();
+				s.bbsCtrl.bbsView();
 			}
 		});
 		add(btnReturn);

@@ -32,6 +32,8 @@ public class BbsDto {
 	private int del;
 	private int readcount;
 	
+	private int rowNum;
+	
 	public BbsDto() {
 		
 	}
@@ -108,6 +110,14 @@ public class BbsDto {
 
 	public void setReadcount(int readcount) {
 		this.readcount = readcount;
+	}
+	
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
 	}
 
 	@Override

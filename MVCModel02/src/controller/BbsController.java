@@ -8,6 +8,7 @@ import service.impl.BbsServiceImpl;
 import view.BbsDetailOne;
 import view.BbsDetailTwo;
 import view.BbsListView;
+import view.WriteAddPageView;
 
 public class BbsController {
 	
@@ -25,8 +26,12 @@ public class BbsController {
 		new BbsDetailTwo(seqNum);
 	}
 	
-	public List<BbsDto> viewListSelect() {
-		return bbsServ.getBbsList();
+	public void WriteAddPageView() {
+		new WriteAddPageView();
+	}
+	
+	public List<BbsDto> viewListSelect(int selectedIndex, String text, int rowEndNum, int rowStartNum, int rowSetNum) {
+		return bbsServ.getBbsList(selectedIndex, text, rowEndNum, rowStartNum, rowSetNum);
 	}
 	
 	public void readCount(int seq) {
@@ -49,6 +54,16 @@ public class BbsController {
 		bbsServ.AddWritePage(dto);
 		
 	}
+	
+	public int rowNum20(int rowStartNum) {
+		return bbsServ.rowNum20(rowStartNum);
+	}
+	
+	public int rowNum10(int rowSetNum, int rowStartNum) {
+		return bbsServ.rowNum10(rowSetNum, rowStartNum);
+	}
+
+
 	
 
 }

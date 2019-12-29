@@ -36,6 +36,8 @@ public class BbsListView extends JFrame implements MouseListener {
 	DefaultTableModel model; // table의 넓이를 설정하기 위한 값. view
 
 	List<BbsDto> list = null;
+	
+	
 
 	public BbsListView() {
 
@@ -49,14 +51,14 @@ public class BbsListView extends JFrame implements MouseListener {
 		add(label);
 		
 		Singleton s = Singleton.getInstance();
-		list = s.bbsCtrl.viewListSelect();
+		list = s.bbsCtrl.viewListSelect(s.selectedIndex, s.text, s.rowEndNum, s.rowStartNum, s.rowSetNum);
 
 		// jtable에 row를 생성
 		rowData = new Object[list.size()][3];
 		// list에서 테이블로 데이터를 삽입하기 위한 처리
 		for (int i = 0; i < list.size(); i++) {
 			BbsDto dto = list.get(i);
-			rowData[i][0] = i + 1; // 글번호
+			rowData[i][0] = dto.getRowNum(); // 글번호
 			rowData[i][1] = dto.getTitle(); // 글제목
 			rowData[i][2] = dto.getId(); // 작성자
 		}
@@ -82,7 +84,7 @@ public class BbsListView extends JFrame implements MouseListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				WriteAddPageView addWrite = new WriteAddPageView();
+				s.bbsCtrl.WriteAddPageView();
 				dispose();
 			}
 		});
@@ -94,8 +96,10 @@ public class BbsListView extends JFrame implements MouseListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				s.rowStartNum = 0;
+				s.selectedIndex = -1;
 				dispose();
-				BbsListView view = new BbsListView();
+				s.bbsCtrl.bbsView();
 			}
 		});
 		add(returnBtn);
@@ -123,7 +127,7 @@ public class BbsListView extends JFrame implements MouseListener {
 					s.selectedIndex = searchChoice.getSelectedIndex();
 					s.text = searchTextf.getText();
 					dispose();
-					BbsListView view = new BbsListView();
+					s.bbsCtrl.bbsView();
 				} else {
 					JOptionPane.showMessageDialog(null, "검색어를 입력 하지 않았습니다.");
 				}
@@ -138,11 +142,12 @@ public class BbsListView extends JFrame implements MouseListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				s.selectedIndex = -1;
-				if (s.rowEndNum == s.rowNum20()) {
+				s.rowEndNum = list.size();
+				if (s.rowEndNum == s.bbsCtrl.rowNum20(s.rowStartNum)) {
 					s.rowStartNum = s.rowStartNum + 1;
 					dispose();
-					BbsListView view = new BbsListView();
-				} else if (s.rowEndNum != s.rowNum20()) {
+					s.bbsCtrl.bbsView();
+				} else if (s.rowEndNum != s.bbsCtrl.rowNum20(s.rowStartNum)) {
 					JOptionPane.showMessageDialog(null, "마지막 페이지 입니다.");
 				}
 
@@ -162,7 +167,7 @@ public class BbsListView extends JFrame implements MouseListener {
 				} else {
 					s.rowStartNum = s.rowStartNum - 1;
 					dispose();
-					BbsListView view = new BbsListView();
+					s.bbsCtrl.bbsView();
 				}
 			}
 		});
@@ -178,7 +183,7 @@ public class BbsListView extends JFrame implements MouseListener {
 				JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
 				s.rowStartNum = 0;
 				s.selectedIndex =-1;
-				new LoginView();
+				s.memCtrl.login();
 			}
 		});
 		add(logoutBtn);

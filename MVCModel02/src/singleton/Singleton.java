@@ -5,6 +5,12 @@ import controller.MemberController;
 
 public class Singleton {
 	
+	public int selectedIndex = -1;
+	public String text = "";
+	public int rowEndNum = 0;
+	public int rowStartNum = 0;
+	public int rowSetNum = 1;
+	
 	public MemberController memCtrl = null;
 	public BbsController bbsCtrl = null;
 	

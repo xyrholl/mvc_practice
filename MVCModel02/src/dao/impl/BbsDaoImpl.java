@@ -14,14 +14,8 @@ import dto.BbsDto;
 import singleton.Singleton;
 
 public class BbsDaoImpl implements BbsDao {
-	
-	public int selectedIndex = -1;
-	public String text = "";
-	public int rowEndNum = 0;
-	public int rowStartNum = 0;
-	public int rowSetNum = 1;
-	
-	public int rowNum10() {
+
+	public int rowNum10(int rowSetNum, int rowStartNum) {
 		int rowNum10 = rowSetNum + rowStartNum * 10; // 1, 11, 21, 31, 41, 51
 		if (rowStartNum < 0) {
 			rowStartNum = 0;
@@ -30,7 +24,7 @@ public class BbsDaoImpl implements BbsDao {
 		return rowNum10;
 	}
 
-	public int rowNum20() {
+	public int rowNum20(int rowStartNum) {
 		int rowNum20 = 10 + rowStartNum * 10; // 10, 20, 30, 40, 50
 		if (rowStartNum < 0) {
 			rowStartNum = 0;
@@ -38,27 +32,31 @@ public class BbsDaoImpl implements BbsDao {
 		}
 		return rowNum20;
 	}
-	
+
+	public int getRowEndNum(int rowEndNum) {
+		return rowEndNum;
+	}
+
 	@Override
-	public List<BbsDto> getBbsList() {
-		Singleton s = Singleton.getInstance();
-		
+	public List<BbsDto> getBbsList(int selectedIndex, String text, int rowEndNum, int rowStartNum, int rowSetNum) {
+
 		List<BbsDto> list = null;
 
-		String sql = " SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, READCOUNT, RNUM, MAX(RNUM)OVER(PARTITION BY RNUM) "
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, READCOUNT, RNUM "
 				+ " FROM (SELECT ROWNUM AS RNUM, SEQ, ID, TITLE, CONTENT, WDATE, DEL, READCOUNT "
 				+ " FROM (SELECT SEQ, ID, TITLE, CONTENT, WDATE, DEL, READCOUNT " + " FROM BBS ";
 
-		if (s.selectedIndex == 0) { // 작성자검색
+		if (selectedIndex == 0) { // 작성자검색
 			sql = sql + " WHERE ID LIKE '%'||?||'%' AND DEL = 0 ";
-		} else if (s.selectedIndex == 1) { // 제목검색
+		} else if (selectedIndex == 1) { // 제목검색
 			sql = sql + " WHERE TITLE LIKE '%'||?||'%' AND DEL = 0 ";
-		} else if (s.selectedIndex == 2) { // 내용검색
+		} else if (selectedIndex == 2) { // 내용검색
 			sql = sql + " WHERE CONTENT LIKE '%'||?||'%' AND DEL = 0 ";
 		} else {
 			sql = sql + " WHERE DEL = 0 ";
 		}
-		sql = sql + " ORDER BY WDATE DESC)) " + " WHERE RNUM BETWEEN " + s.rowNum10() + " AND " + s.rowNum20() + " ";
+		sql = sql + " ORDER BY WDATE DESC)) " + " WHERE RNUM BETWEEN " + rowNum10(rowSetNum, rowStartNum) + " AND "
+				+ rowNum20(rowStartNum) + " ";
 
 		System.out.println("sql:" + sql);
 
@@ -71,14 +69,14 @@ public class BbsDaoImpl implements BbsDao {
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			if (s.selectedIndex == 0 || s.selectedIndex == 1 || s.selectedIndex == 2) {
-				psmt.setString(1, s.text);
+			if (selectedIndex == 0 || selectedIndex == 1 || selectedIndex == 2) {
+				psmt.setString(1, text);
 			}
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				BbsDto dto = new BbsDto(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
 						rs.getString(5), rs.getInt(6), rs.getInt(7));
-				s.rowEndNum = Integer.parseInt(rs.getString(9));
+				dto.setRowNum(Integer.parseInt(rs.getString(8)));
 				list.add(dto);
 			}
 
@@ -89,7 +87,7 @@ public class BbsDaoImpl implements BbsDao {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public void readCount(int seq) {
 		String sql = " UPDATE BBS " + " SET READCOUNT = READCOUNT + 1 " + " WHERE seq = ?";
@@ -111,7 +109,7 @@ public class BbsDaoImpl implements BbsDao {
 		}
 
 	}
-	
+
 	@Override
 	public BbsDto selectOne(int seq) {
 		BbsDto dto = null;
@@ -147,7 +145,7 @@ public class BbsDaoImpl implements BbsDao {
 		}
 		return dto;
 	}
-	
+
 	@Override
 	public int delete(int seq) {
 		String sql = " UPDATE BBS SET DEL = 1 " + " WHERE SEQ = " + seq + " ";
@@ -170,7 +168,7 @@ public class BbsDaoImpl implements BbsDao {
 
 		return rs;
 	}
-	
+
 	@Override
 	public boolean UpdateWritePage(BbsDto dto, int seq) {
 
@@ -203,7 +201,7 @@ public class BbsDaoImpl implements BbsDao {
 		}
 		return check;
 	}
-	
+
 	@Override
 	public void AddWritePage(BbsDto dto) {
 		String sql = " INSERT INTO BBS (SEQ, ID, TITLE, CONTENT, WDATE, DEL, READCOUNT) "
@@ -229,5 +227,5 @@ public class BbsDaoImpl implements BbsDao {
 			DBClose.close(psmt, conn, null);
 		}
 	}
-	
+
 }

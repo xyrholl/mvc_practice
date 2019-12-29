@@ -6,7 +6,7 @@ import dto.BbsDto;
 
 public interface BbsDao {
 	
-	public List<BbsDto> getBbsList();
+	public List<BbsDto> getBbsList(int selectedIndex, String text, int rowEndNum, int rowStartNum, int rowSetNum);
 	
 	public void readCount(int seq);
 	
@@ -18,4 +18,9 @@ public interface BbsDao {
 	
 	public void AddWritePage(BbsDto dto);
 
+	public int rowNum20(int rowStartNum);
+	
+	public int rowNum10(int rowSetNum, int rowStartNum);
+	
+	public int getRowEndNum(int rowEndNum);
 }
