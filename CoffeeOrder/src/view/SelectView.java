@@ -15,37 +15,16 @@ import dto.OrderDto;
 import singleton.Singleton;
 
 public class SelectView extends JFrame {
-	
-	private String name;
-	private String sizePrice_short;
-	private String sizePrice_tall;
-	private String sizePrice_grande;
-	
 
 	public SelectView(Object objDto, CoffeeDto dto) {
 
 		setTitle("선택화면");
 		setSize(650, 230);
-
 		setLayout(null);
 
 		Singleton singleton = Singleton.getInstance();
-		
-		name = dto.getName();
-		sizePrice_short = dto.getSize_short();
-		sizePrice_tall = dto.getSize_tall();
-		sizePrice_grande = dto.getSize_grande();
-		
-		if (objDto != null) {
-			if (objDto instanceof CoffeeDto) {
-				name = ((CoffeeDto)objDto).getName();
-				sizePrice_short = ((CoffeeDto)objDto).getSize_short();
-				sizePrice_tall = ((CoffeeDto)objDto).getSize_tall();
-				sizePrice_grande = ((CoffeeDto)objDto).getSize_grande();
-			}
-		}
 
-		JLabel menuNameLabel = new JLabel(name);
+		JLabel menuNameLabel = new JLabel(dto.getName());
 		menuNameLabel.setBounds(35, 30, 300, 25);
 		add(menuNameLabel);
 
@@ -110,68 +89,7 @@ public class SelectView extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				singleton.orderCtrl.orderAdd(singleton.getLoginID(), dto.getName(), sizeChoice.getSelectedIndex());
-//				
-//				singleton.getLoginID(); // string
-//				dto.getName(); // string
-//				sizeChoice.getSelectedIndex(); // int
-//				syrupChoice.getSelectedIndex(); // int
-//				otherChoice.getSelectedIndex(); // int
-//				eaChoice.getText().trim(); // string
-				
-				Singleton singleton = Singleton.getInstance();
-				OrderDto orderDto = new OrderDto();
-				
-				orderDto.setLoginID(singleton.getLoginID());
-				orderDto.setCoffeeName(name);
-				if (sizeChoice.getSelectedIndex() == 0) {
-					orderDto.setPrice(sizePrice_short);
-					orderDto.setSize("Short");
-				} else if (sizeChoice.getSelectedIndex() == 1) {
-					orderDto.setPrice(sizePrice_tall);
-					orderDto.setSize("Tall");
-				} else if (sizeChoice.getSelectedIndex() == 2) {
-					orderDto.setPrice(sizePrice_grande);
-					orderDto.setSize("Grande");
-				}
-				System.out.println(orderDto.getPrice());
-				
-				int price = Integer.parseInt(orderDto.getPrice());
-
-				if (syrupChoice.getSelectedIndex() == 0) {
-					orderDto.setSyrupAdd("추가안함");
-				} else if (syrupChoice.getSelectedIndex() == 1) {
-					orderDto.setSyrupAdd("바닐라 시럽");
-					orderDto.setPrice(Integer.toString((price + 500)));
-				} else if (syrupChoice.getSelectedIndex() == 2) {
-					orderDto.setSyrupAdd("카라멜 시럽");
-					orderDto.setPrice(Integer.toString((price + 500)));
-				} else if (syrupChoice.getSelectedIndex() == 3) {
-					orderDto.setSyrupAdd("헤이즐넛 시럽");
-					orderDto.setPrice(Integer.toString((price + 500)));
-				}
-
-				if (otherChoice.getSelectedIndex() == 0) {
-					orderDto.setOtherAdd("추가안함");
-				} else if (otherChoice.getSelectedIndex() == 1) {
-					orderDto.setOtherAdd("샷추가");
-					orderDto.setPrice(Integer.toString((price + 500)));
-				} else if (otherChoice.getSelectedIndex() == 2) {
-					orderDto.setOtherAdd("휘핑크림 추가");
-					orderDto.setPrice(Integer.toString((price + 500)));
-				}
-				orderDto.setEA(eaChoice.getText().trim());
-				int total_price = price*Integer.parseInt(eaChoice.getText());
-				orderDto.setPrice(Integer.toString(total_price));
-				for (int i = 0; i < singleton.orderList.size(); i++) {
-					if (singleton.orderList.get(i).getCoffeeName().equals(name)
-							&& !singleton.orderList.get(i).getPrice().equals(Integer.toString(total_price))) {
-						singleton.orderList.remove(i);
-					} else if(singleton.orderList.get(i).getCoffeeName().equals(name) || singleton.orderList.get(i).getPrice().equals(Integer.toString(total_price))) {
-						singleton.orderList.remove(i);
-					}
-				}
-				singleton.orderList.add(orderDto);
+				singleton.orderCtrl.orderAdd(objDto, dto, dto.getName(), sizeChoice.getSelectedIndex(), syrupChoice.getSelectedIndex(), otherChoice.getSelectedIndex(), eaChoice.getText());
 				singleton.selectCtrl.menu();
 				dispose();
 			}
