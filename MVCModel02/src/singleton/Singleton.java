@@ -10,11 +10,11 @@ public class Singleton {
 	public int rowEndNum = 0;
 	public int rowStartNum = 0;
 	public int rowSetNum = 1;
+	private String loginID = null;
 	
 	public MemberController memCtrl = null;
 	public BbsController bbsCtrl = null;
 	
-	private String loginID = null;
 
 	private static Singleton s = null;
 	
