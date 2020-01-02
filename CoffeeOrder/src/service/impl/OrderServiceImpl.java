@@ -5,7 +5,7 @@ import java.util.List;
 import dao.OrderDao;
 import dao.impl.OrderDaoImpl;
 import dto.OrderDto;
-import serviec.OrderService;
+import service.OrderService;
 
 public class OrderServiceImpl implements OrderService {
 	

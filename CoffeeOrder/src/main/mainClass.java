@@ -1,10 +1,10 @@
 package main;
 
-import controller.MemberController;
+import singleton.Singleton;
 
 public class mainClass {
 	public static void main(String[] args) {
-		MemberController memctrl = new MemberController();
-		memctrl.login();
+		Singleton singleton = Singleton.getInstance();
+		singleton.memCtrl.login();
 	}
 }

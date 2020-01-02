@@ -1,4 +1,4 @@
-package serviec;
+package service;
 
 import dto.MemberDto;
 

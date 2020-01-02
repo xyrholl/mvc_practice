@@ -3,7 +3,7 @@ package service.impl;
 import dao.MemberDao;
 import dao.impl.MemberDaoImpl;
 import dto.MemberDto;
-import serviec.MemberService;
+import service.MemberService;
 
 public class MemberServiceImpl implements MemberService {
 

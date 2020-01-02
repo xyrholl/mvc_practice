@@ -12,18 +12,9 @@ public class Singleton {
 	
 	public static Singleton singleton = null;
 	
-	public int selectedIndex = -1;
-	public String text = "";
-	public int rowEndNum = 0;
-	public int rowStartNum = 0;
-	public int rowSetNum = 1;
-	private String loginID = null;
-	
 	public MemberController memCtrl = null;
 	public SelectController selectCtrl = null;
 	public OrderController orderCtrl = null;
-	
-	public List<OrderDto> orderList = new ArrayList<OrderDto>();
 	
 	private Singleton() {
 		memCtrl = new MemberController();
@@ -37,6 +28,16 @@ public class Singleton {
 		}
 		return singleton;
 	}
+	
+	private String loginID = null;
+	
+	public List<OrderDto> orderList = new ArrayList<OrderDto>();
+	
+	public int selectedIndex = -1;
+	public String text = "";
+	public int rowEndNum = 0;
+	public int rowStartNum = 0;
+	public int rowSetNum = 1;
 
 	public String getLoginID() {
 		return loginID;
@@ -45,8 +46,5 @@ public class Singleton {
 	public void setLoginID(String loginID) {
 		this.loginID = loginID;
 	}
-	
-	
-	
 
 }
