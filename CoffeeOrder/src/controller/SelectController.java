@@ -28,11 +28,11 @@ public class SelectController {
 		return selectServ.getBbsList(selectedIndex, text, rowEndNum, rowStartNum, rowSetNum);
 	}
 	
-	public int rowNum20(int rowStartNum) {
+	public int isPageEndedRowNum(int rowStartNum) {
 		return selectServ.rowNum20(rowStartNum);
 	}
 	
-	public int rowNum10(int rowSetNum, int rowStartNum) {
+	public int isPageStartRowNum(int rowSetNum, int rowStartNum) {
 		return selectServ.rowNum10(rowSetNum, rowStartNum);
 	}
 	

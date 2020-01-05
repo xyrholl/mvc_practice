@@ -18,12 +18,12 @@ public class SelectServiceImpl implements SelectService {
 
 	@Override
 	public int rowNum10(int rowSetNum, int rowStartNum) {
-		return dao.rowNum10(rowSetNum, rowStartNum);
+		return dao.isPageStartRowNum(rowSetNum, rowStartNum);
 	}
 
 	@Override
 	public int rowNum20(int rowStartNum) {
-		return dao.rowNum20(rowStartNum);
+		return dao.isPageEndedRowNum(rowStartNum);
 	}
 
 	@Override

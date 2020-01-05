@@ -15,8 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import dto.OrderDto;
 import singleton.Singleton;
 
-public class OrderView extends JFrame{
-	
+public class OrderView extends JFrame {
+
 	private JTable jtable2;
 	private JScrollPane jscrPane2;
 
@@ -25,20 +25,19 @@ public class OrderView extends JFrame{
 	Object orderRowData[][];
 
 	DefaultTableModel model2;
-	
-	
+
 	public OrderView() {
-		
+
 		setTitle("주문확인 및 결제");
 		setSize(650, 300);
 		setLayout(null);
-		
+
 		Singleton singleton = Singleton.getInstance();
-		
+
 		JLabel orderMenu = new JLabel("주문내역");
 		orderMenu.setBounds(40, 20, 100, 22);
 		add(orderMenu);
-		
+
 		if (singleton.orderList != null) {
 			orderRowData = new Object[singleton.orderList.size()][6];
 			for (int i = 0; i < singleton.orderList.size(); i++) {
@@ -51,7 +50,7 @@ public class OrderView extends JFrame{
 				orderRowData[i][5] = orderDto.getPrice();
 			}
 		}
-		
+
 		model2 = new DefaultTableModel(orderMenuRow, 0);
 		model2.setDataVector(orderRowData, orderMenuRow); // 2차원 배열을 사용했음. 이게 뭥미
 
@@ -67,50 +66,54 @@ public class OrderView extends JFrame{
 		jscrPane2 = new JScrollPane(jtable2);
 		jscrPane2.setBounds(10, 50, 600, 100);
 		add(jscrPane2);
-		
+
 		ArrayList<OrderDto> list = (ArrayList<OrderDto>) singleton.orderList;
 		int totalPrice = 0;
 		int totalEA = 0;
 		for (OrderDto orderDto : list) {
-			 totalPrice += Integer.parseInt(orderDto.getPrice());
-			 totalEA += Integer.parseInt(orderDto.getEA());
+			totalPrice += Integer.parseInt(orderDto.getPrice());
+			totalEA += Integer.parseInt(orderDto.getEA());
 		}
-		
+
 		JLabel totalPriceLabel = new JLabel("총 금액");
 		totalPriceLabel.setBounds(500, 20, 100, 22);
 		add(totalPriceLabel);
-		
-		JLabel orderPrice = new JLabel(totalPrice+"");
+
+		JLabel orderPrice = new JLabel(totalPrice + "");
 		orderPrice.setBounds(550, 20, 100, 22);
 		add(orderPrice);
-		
+
 		JLabel totalEALabel = new JLabel("총 개수");
 		totalEALabel.setBounds(400, 20, 100, 22);
 		add(totalEALabel);
-		
-		JLabel orderEA = new JLabel(totalEA+"");
+
+		JLabel orderEA = new JLabel(totalEA + "");
 		orderEA.setBounds(450, 20, 100, 22);
 		add(orderEA);
-		
+
 		JButton orderStart = new JButton("결제하기");
 		orderStart.setBounds(500, 200, 110, 30);
 		orderStart.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				singleton.orderCtrl.addOrder(singleton.orderList);
-				JOptionPane.showMessageDialog(null, singleton.getLoginID()+" 님의 주문이 결제 완료 되었습니다.");
-				dispose();
-				singleton.orderList.clear();
-				singleton.memCtrl.login();
+				if (singleton.orderList.size() == 0) {
+					JOptionPane.showMessageDialog(null, "주문내역이 없습니다. \n주문내역을 확인해 주세요.");
+				}else {
+					JOptionPane.showMessageDialog(null, singleton.getLoginID() + " 님의 주문이 결제 완료 되었습니다.");
+					dispose();
+					singleton.orderList.clear();
+					singleton.memCtrl.login();
+				}
 			}
 		});
 		add(orderStart);
-		
+
 		JButton returnBtn = new JButton("메뉴로 돌아가기");
 		returnBtn.setBounds(320, 200, 150, 30);
 		returnBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -118,11 +121,11 @@ public class OrderView extends JFrame{
 			}
 		});
 		add(returnBtn);
-		
+
 		setLocation(600, 100);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 	}
 
 }

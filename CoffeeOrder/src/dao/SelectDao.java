@@ -6,9 +6,9 @@ import dto.CoffeeDto;
 
 public interface SelectDao {
 	
-	public int rowNum10(int rowSetNum, int rowStartNum);
+	public int isPageStartRowNum(int rowSetNum, int rowStartNum);
 	
-	public int rowNum20(int rowStartNum);
+	public int isPageEndedRowNum(int rowStartNum);
 	
 	public CoffeeDto selectOne(String name);
 

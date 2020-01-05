@@ -139,11 +139,11 @@ public class MenuView extends JFrame implements MouseListener {
 				singleton.rowEndNum = menuList.size();
 				if (singleton.rowEndNum % 10 == 0) {
 					JOptionPane.showMessageDialog(null, "마지막 페이지 입니다.");
-				} else if (singleton.rowEndNum == singleton.selectCtrl.rowNum20(singleton.rowStartNum)) {
+				} else if (singleton.rowEndNum == singleton.selectCtrl.isPageEndedRowNum(singleton.rowStartNum)) {
 					singleton.rowStartNum = singleton.rowStartNum + 1;
 					dispose();
 					singleton.selectCtrl.menu();
-				} else if (singleton.rowEndNum != singleton.selectCtrl.rowNum20(singleton.rowStartNum)) {
+				} else if (singleton.rowEndNum != singleton.selectCtrl.isPageEndedRowNum(singleton.rowStartNum)) {
 					JOptionPane.showMessageDialog(null, "마지막 페이지 입니다.");
 				}
 

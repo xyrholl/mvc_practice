@@ -24,22 +24,22 @@ import dto.CoffeeDto;
 
 public class SelectDaoImpl implements SelectDao {
 
-	public int rowNum10(int rowSetNum, int rowStartNum) {
-		int rowNum10 = rowSetNum + rowStartNum * 10; // 1, 11, 21, 31, 41, 51
+	public int isPageStartRowNum(int rowSetNum, int rowStartNum) {
+		int isPageStartRowNum = rowSetNum + rowStartNum * 10; // 1, 11, 21, 31, 41, 51
 		if (rowStartNum < 0) {
 			rowStartNum = 0;
-			return rowNum10 = 1;
+			return isPageStartRowNum = 1;
 		}
-		return rowNum10;
+		return isPageStartRowNum;
 	}
 
-	public int rowNum20(int rowStartNum) {
-		int rowNum20 = 10 + rowStartNum * 10; // 10, 20, 30, 40, 50
+	public int isPageEndedRowNum(int rowStartNum) {
+		int isPageEndedRowNum = 10 + rowStartNum * 10; // 10, 20, 30, 40, 50
 		if (rowStartNum < 0) {
 			rowStartNum = 0;
-			return rowNum20 = 10;
+			return isPageEndedRowNum = 10;
 		}
-		return rowNum20;
+		return isPageEndedRowNum;
 	}
 
 	public CoffeeDto selectOne(String name) {
@@ -94,9 +94,9 @@ public class SelectDaoImpl implements SelectDao {
 			text = "모카";
 			sql = sql + " WHERE COFFEE_NAME LIKE '%'||?||'%' ";
 		}
-		
-		sql = sql + " ORDER BY SEQ DESC)) " + " WHERE RNUM BETWEEN " + rowNum10(rowSetNum, rowStartNum) + " AND "
-				+ rowNum20(rowStartNum) + " ";
+
+		sql = sql + " ORDER BY SEQ DESC)) " + " WHERE RNUM BETWEEN " + isPageStartRowNum(rowSetNum, rowStartNum)
+				+ " AND " + isPageEndedRowNum(rowStartNum) + " ";
 
 		System.out.println("sql:" + sql);
 
