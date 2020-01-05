@@ -36,12 +36,12 @@ public class OldOrderView extends JFrame{
 		orderMenu.setBounds(40, 20, 100, 22);
 		add(orderMenu);
 		
-		singleton.orderList = singleton.orderCtrl.selectOne(singleton.getLoginID());
+		singleton.oldOrderList = singleton.orderCtrl.selectOne(singleton.getLoginID());
 		
-		if (singleton.orderList != null) {
-			orderRowData = new Object[singleton.orderList.size()][5];
-			for (int i = 0; i < singleton.orderList.size(); i++) {
-				OrderDto orderDto = singleton.orderList.get(i);
+		if (singleton.oldOrderList != null) {
+			orderRowData = new Object[singleton.oldOrderList.size()][5];
+			for (int i = 0; i < singleton.oldOrderList.size(); i++) {
+				OrderDto orderDto = singleton.oldOrderList.get(i);
 				orderRowData[i][0] = orderDto.getCoffeeName();
 				orderRowData[i][1] = orderDto.getOrderDate();
 				orderRowData[i][2] = orderDto.getSize();
@@ -67,7 +67,7 @@ public class OldOrderView extends JFrame{
 		
 		int totalPrice = 0;
 		int totalEA = 0;
-		for (OrderDto orderDto : singleton.orderList) {
+		for (OrderDto orderDto : singleton.oldOrderList) {
 			 totalPrice += Integer.parseInt(orderDto.getPrice());
 			 totalEA += Integer.parseInt(orderDto.getEA());
 		}
@@ -137,7 +137,7 @@ public class OldOrderView extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				singleton.orderList.clear();
+				singleton.oldOrderList.clear();
 				singleton.selectCtrl.menu();
 			}
 		});

@@ -23,5 +23,5 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDto loginCheck(String id, String pw) {
 		return dao.loginCheck(id, pw);
 	}
-
+	
 }

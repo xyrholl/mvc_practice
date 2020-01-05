@@ -13,5 +13,6 @@ public interface SelectService {
 	public CoffeeDto selectOne(String name);
 	
 	public List<CoffeeDto> getBbsList(int selectedIndex, String text, int rowEndNum, int rowStartNum, int rowSetNum);
-
+	
+	
 }

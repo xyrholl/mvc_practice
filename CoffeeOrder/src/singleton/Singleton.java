@@ -32,6 +32,7 @@ public class Singleton {
 	private String loginID = null;
 	
 	public List<OrderDto> orderList = new ArrayList<OrderDto>();
+	public List<OrderDto> oldOrderList = new ArrayList<OrderDto>();
 	
 	public int selectedIndex = -1;
 	public String text = "";

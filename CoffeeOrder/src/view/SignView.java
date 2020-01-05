@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import dto.MemberDto;
@@ -106,19 +107,19 @@ public class SignView extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				Singleton s = Singleton.getInstance();
-//				
-//				if (idTextf.getText().trim().equals("")) {
-//					JOptionPane.showMessageDialog(null, "id를 입력해주세요");
-//					return;
-//				}
-//				boolean b = s.memCtrl.idCheck(idTextf.getText().trim());
-//				if (b) {
-//					JOptionPane.showMessageDialog(null, "사용할 수 없는 id입니다.");
-//					idTextf.setText("");
-//				} else {
-//					JOptionPane.showMessageDialog(null, "id는 사용하실수 있습니다.");
-//				}
+				Singleton s = Singleton.getInstance();
+				
+				if (idTextf.getText().trim().equals("")) {
+					JOptionPane.showMessageDialog(null, "id를 입력해주세요");
+					return;
+				}
+				boolean b = s.memCtrl.checkId(idTextf.getText().trim());
+				if (b) {
+					JOptionPane.showMessageDialog(null, "사용할 수 없는 id입니다.");
+					idTextf.setText("");
+				} else {
+					JOptionPane.showMessageDialog(null, "id는 사용하실수 있습니다.");
+				}
 			}
 		});
 		add(btnCheck);

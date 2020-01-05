@@ -17,6 +17,9 @@ public class MemberController {
 	public void sign() {
 		new SignView();
 	}
+	public boolean checkId(String id) {
+		return memServ.getId(id);
+	}
 	
 	public MemberDto checkLogin(String id, String pw) {
 		return memServ.loginCheck(id, pw);
